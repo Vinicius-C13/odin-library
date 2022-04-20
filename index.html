@@ -13,22 +13,11 @@
     <header>
         <ul class="flex">
             <li>Library</li>
-            <li><button>+ Add Book</button></li>
+            <li><button id="add-button">+ Add Book</button></li>
         </ul>
     </header>
     <main class="flex">
-        <form id="book-form" class="flex" action="index.html" method="get">
-            <h2>New Book</h2>
-            <div><input type="text" id="title" name="title" required></div>
-            <div><input type="text" id="author" name="author" required></div>
-            <div><input type="number" id="pages" name="pages" required></div>
-            <div>
-                <label for="status">Have you read it?</label>
-                <input type="checkbox" id="status" name="status" value=true>
- 
-            </div>
-            <input type="submit" id="send" value="Send">
-        </form>
+    
         <div id="content" class="flex">
 
         </div>
@@ -36,5 +25,19 @@
     <footer>
 
     </footer>
+<div id="blur-bg" class="flex">
+    <form id="book-form" action="index.html" method="get">
+        <h2>Add new book</h2>
+        <div><input class="erase" type="text" id="title" name="title" required></div>
+        <div><input class="erase" type="text" id="author" name="author" required></div>
+        <div><input class="erase" type="number" id="pages" name="pages" required></div>
+        <div>
+            <label for="status">Have you read it?</label>
+            <input type="checkbox" id="status" name="status" value=true>
+
+        </div>
+        <input type="submit" id="send" value="Send">
+    </form>
+</div>
 </body>
 </html>
