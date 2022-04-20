@@ -19,6 +19,18 @@ class UI {
                 author: "example",
                 pages: "130",
                 status: "read"
+            },
+            {
+                title: "Book example",
+                author: "example",
+                pages: "130",
+                status: "read"
+            },
+            {
+                title: "Book example",
+                author: "example",
+                pages: "130",
+                status: "read"
             }
         ];
 
@@ -32,15 +44,26 @@ class UI {
 
         const bookCard = document.createElement("div");
         bookCard.innerHTML = `
-        <div> ${book.title} </div>
+        <div> "${book.title}" </div>
         <div> ${book.author} </div>
         <div> ${book.pages} pages</div>
-        <button>${book.status}</button>
-        <button>Delete</button>
+        <button class="status">${book.status}</button>
+        <button class="delete">Delete</button>
         `
 
         display.appendChild(bookCard);
-    }
+    };
+
+    static openForm() {
+        document.querySelector('form').style.zIndex = '10';
+        document.querySelector('#blur-bg').style.zIndex = '9'
+    };
+
+    static closeForm() {
+        document.querySelector('form').style.zIndex = '-10';
+        document.querySelector('#blur-bg').style.zIndex = '-11'
+    };
+
 };
 
 //Store Class: Handles Storage
@@ -68,18 +91,35 @@ document.querySelector("#book-form").addEventListener("submit", (e)=>{
     //Add book to UI
     UI.addBooksToShelf(newBook);
 
-    //Checks if book was already read
-    function checkBookStatus() {
-        if(document.querySelector("input[id='status']:checked") == null){
-            return "not read"
-        }else{return "read"}
-    }
-
     //Erase form inputs
-    const inputs = document.querySelectorAll('input');
+    const inputs = document.querySelectorAll('.erase');
 
     inputs.forEach((item) => item.value = '');
+
+    //Close form when submited
+    UI.closeForm();
 });
 
 //Event: Remove a Book
 
+
+//Open form popup
+
+document.querySelector('form').style.zIndex = '-10';
+
+document.querySelector('#add-button').addEventListener('click', ()=>{
+    UI.openForm();
+});
+
+document.querySelector('#blur-bg').addEventListener('click', (e)=>{
+    if(e.target.id == 'blur-bg') {
+    UI.closeForm();
+    }
+});
+
+//Checks if book was already read
+function checkBookStatus() {
+    if(document.querySelector("input[id='status']:checked") == null){
+        return "not read"
+    }else{return "read"}
+};
