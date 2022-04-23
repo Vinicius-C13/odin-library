@@ -15,21 +15,21 @@ class UI {
     static displayBooks() {
         const myLibrary = [
             {
-                title: "Book example",
+                title: "Book one",
                 author: "example",
                 pages: "130",
+                status: "not read"
+            },
+            {
+                title: "Book two",
+                author: "example",
+                pages: "210",
                 status: "read"
             },
             {
-                title: "Book example",
+                title: "Book three",
                 author: "example",
-                pages: "130",
-                status: "read"
-            },
-            {
-                title: "Book example",
-                author: "example",
-                pages: "130",
+                pages: "100",
                 status: "read"
             }
         ];
@@ -50,26 +50,58 @@ class UI {
         <button class="status">${book.status}</button>
         <button class="delete">Delete</button>
         `
-
+        console.log(book.title.length);       
         display.appendChild(bookCard);
     };
 
+    static clearInputs() {
+        const inputs = document.querySelectorAll('.erase');
+        inputs.forEach((item) => item.value = '');
+    }
+
     static openForm() {
         document.querySelector('form').style.zIndex = '10';
-        document.querySelector('#blur-bg').style.zIndex = '9'
+        document.querySelector('#blur-bg').style.zIndex = '9';
     };
 
     static closeForm() {
         document.querySelector('form').style.zIndex = '-10';
-        document.querySelector('#blur-bg').style.zIndex = '-11'
+        document.querySelector('#blur-bg').style.zIndex = '-11';
     };
 
+    static deleteCardBook(el) {   
+        document.querySelector('#content').removeChild(el.parentElement);
+    }
+
+    static changeBookStatus(el) {
+        if(el.textContent == 'read') {
+            el.textContent = 'not read';
+            UI.statusButtonColor();
+        }else{
+            el.textContent = 'read';
+            UI.statusButtonColor();
+        }
+    };
+
+    static statusButtonColor() {
+
+        document.querySelectorAll('.status').forEach((item)=> {
+            if(item.textContent == 'read') {
+                item.style.backgroundColor = 'rgb(102, 255, 102)';
+            }else{
+                item.style.backgroundColor = 'rgb(255, 51, 51)';
+            }
+        });
+    }
 };
 
 //Store Class: Handles Storage
 
 //Event: Display Books
-document.addEventListener("DOMContentLoaded", UI.displayBooks);
+document.addEventListener("DOMContentLoaded", ()=> {
+    UI.displayBooks(); 
+    UI.statusButtonColor();
+} );
 
 //Event: Add a book
 
@@ -86,22 +118,31 @@ document.querySelector("#book-form").addEventListener("submit", (e)=>{
     //Create a new Object
     const newBook = new Book(title, author, pages, status);
 
-    console.log(newBook);
-
     //Add book to UI
     UI.addBooksToShelf(newBook);
 
-    //Erase form inputs
-    const inputs = document.querySelectorAll('.erase');
-
-    inputs.forEach((item) => item.value = '');
+    //Clear form inputs when form is submited
+    UI.clearInputs();
 
     //Close form when submited
     UI.closeForm();
+
+    //Define the status button color when submited
+    UI.statusButtonColor();
 });
 
-//Event: Remove a Book
+//Event: Remove a Book or Change book status
 
+document.querySelector('#content').addEventListener('click', (e)=> {
+    if(e.target.classList.contains('delete')) {
+        UI.deleteCardBook(e.target);
+    }
+    else if(e.target.classList.contains('status')) {
+        UI.changeBookStatus(e.target);
+    }
+})
+
+//Event: Change Book status
 
 //Open form popup
 
@@ -111,6 +152,7 @@ document.querySelector('#add-button').addEventListener('click', ()=>{
     UI.openForm();
 });
 
+//Close form with a click out of it
 document.querySelector('#blur-bg').addEventListener('click', (e)=>{
     if(e.target.id == 'blur-bg') {
     UI.closeForm();

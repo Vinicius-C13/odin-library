@@ -111,7 +111,6 @@ li>button{
 }
 
 main{
-    align-items: center;
     padding-block: 3rem;
     flex-direction: column;
     background-color: rgb(212, 212, 212);
@@ -156,9 +155,11 @@ form input[type="submit"]:hover, button:hover{
 }
 
 #content{
+    width: 90%;
+    margin: auto;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
     padding-inline: 3rem;
     gap: 4rem;
 }
@@ -181,6 +182,8 @@ form input[type="submit"]:hover, button:hover{
 
 .status, .delete{
     padding-block: .5rem;
+    border: 0;
+    border-radius: 5px;
 }
 
 #blur-bg{
