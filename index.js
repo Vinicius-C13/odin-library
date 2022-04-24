@@ -21,15 +21,15 @@ class UI {
                 status: "not read"
             },
             {
-                title: "Book two",
-                author: "example",
-                pages: "210",
+                title: "Book one",
+                author: "example 02",
+                pages: "110",
                 status: "read"
             },
             {
-                title: "Book three",
-                author: "example",
-                pages: "100",
+                title: "Book two",
+                author: "example 03",
+                pages: "1100",
                 status: "read"
             }
         ];
