@@ -13,12 +13,12 @@
     <header>
         <ul class="flex">
             <li>Library</li>
-            <li><button id="add-button">+ Add Book</button></li>
+            <li><div id="add-button">Add Book</div></li>
         </ul>
     </header>
     <main>
     
-        <div id="content" class="flex">
+        <div id="content" class="grid">
 
         </div>
     </main>
@@ -31,7 +31,7 @@
         <div><input class="erase" type="text" id="title" name="title" required></div>
         <div><input class="erase" type="text" id="author" name="author" required></div>
         <div><input class="erase" type="number" id="pages" name="pages" required></div>
-        <div>
+        <div class="status-div">
             <label for="status">Have you read it?</label>
             <input type="checkbox" id="status" name="status" value=true>
 
