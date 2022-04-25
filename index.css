@@ -197,6 +197,7 @@ form input[type="submit"]:hover, #add-button:hover{
     padding-block: .5rem;
     border: 0;
     border-radius: 5px;
+    background-color: rgb(212, 212, 212);
 }
 
 #blur-bg{
