@@ -13,28 +13,7 @@ class Book{
 
 class UI {
     static displayBooks() {
-        const myLibrary = [
-            {
-                title: "Book one",
-                author: "example",
-                pages: "130",
-                status: "not read"
-            },
-            {
-                title: "Book one",
-                author: "example 02",
-                pages: "110",
-                status: "read"
-            },
-            {
-                title: "Book two",
-                author: "example 03",
-                pages: "1100",
-                status: "read"
-            }
-        ];
-
-        const books = myLibrary;
+        const books = Store.getBooks();
 
         books.forEach((book) => {UI.addBooksToShelf(book)});
     };
@@ -44,13 +23,12 @@ class UI {
 
         const bookCard = document.createElement("div");
         bookCard.innerHTML = `
-        <div> "${book.title}" </div>
-        <div> ${book.author} </div>
-        <div> ${book.pages} pages</div>
+        <div>${book.title}</div>
+        <div>${book.author}</div>
+        <div>${book.pages} pages</div>
         <button class="status">${book.status}</button>
         <button class="delete">Delete</button>
-        `
-        console.log(book.title.length);       
+        `      
         display.appendChild(bookCard);
     };
 
@@ -97,6 +75,38 @@ class UI {
 
 //Store Class: Handles Storage
 
+class Store {
+
+    static getBooks() {
+        let books;
+        if(localStorage.getItem('books') === null) {
+            books = [];
+        } else {
+            books = JSON.parse(localStorage.getItem('books'));
+        }
+
+        return books;
+    }
+
+    static addBook(book) {
+        const books = Store.getBooks();
+        books.push(book);
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+
+    static removeBook(title) {
+        const books = Store.getBooks();
+
+        books.forEach((book, index) => {
+            if(book.title === title) {
+                books.splice(index, 1);
+            } else {}
+        });
+
+        localStorage.setItem('books', JSON.stringify(books));
+    }
+}
+
 //Event: Display Books
 document.addEventListener("DOMContentLoaded", ()=> {
     UI.displayBooks(); 
@@ -121,6 +131,9 @@ document.querySelector("#book-form").addEventListener("submit", (e)=>{
     //Add book to UI
     UI.addBooksToShelf(newBook);
 
+    //Add book to store
+    Store.addBook(newBook);
+
     //Clear form inputs when form is submited
     UI.clearInputs();
 
@@ -135,7 +148,11 @@ document.querySelector("#book-form").addEventListener("submit", (e)=>{
 
 document.querySelector('#content').addEventListener('click', (e)=> {
     if(e.target.classList.contains('delete')) {
+        //Remove a book from UI
         UI.deleteCardBook(e.target);
+
+        //Remove a book from Local Storage
+        Store.removeBook(e.target.parentElement.children[0].innerText);
     }
     else if(e.target.classList.contains('status')) {
         UI.changeBookStatus(e.target);
